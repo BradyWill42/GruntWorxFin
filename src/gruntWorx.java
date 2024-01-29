@@ -205,14 +205,14 @@ public class gruntWorx {
 
                 //JJ - this is pause that allows files to copy over from local Desktop to Virtual Machine - has to be long because VM is THE WORST!
                 //60000 
-                Thread.sleep(120000);
+                Thread.sleep(12000);
 
                 System.out.println("Files Moved.");
 
                 System.out.println("Starting Gruntworx...");
 
                 //copies string to be pasted into cmd which opens gruntworx
-                str = new StringSelection("start D:\\DRAKE22\\DDM\\GRUNTWORX");
+                str = new StringSelection("start D:\\DRAKE23\\DDM\\GRUNTWORX");
                 clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 clipboard.setContents(str, null);
 
