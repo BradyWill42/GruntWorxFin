@@ -169,7 +169,7 @@ public class gruntWorx {
             //reads the clients InputGrunt.txt codes (E.G. =nn, =ea)
             client.readFullInput();
             
-
+            
             System.out.println("Codes and Account Name extracted.");
 
             //makes file variable for current client
