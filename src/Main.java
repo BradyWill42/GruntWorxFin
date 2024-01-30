@@ -48,7 +48,7 @@ public class Main{
 		if(user == 2){
 			email = "email2";
 		} else {
-			email = "email1";
+			email = "jjoconnor@gmail.com";
 		}
 
 

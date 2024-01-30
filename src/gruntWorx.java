@@ -87,6 +87,7 @@ public class gruntWorx {
                     FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter);
                     System.out.println(client.getName() + " Directory Successfully Copied.");
                 } catch(IOException e){
+                    e.printStackTrace();
                     System.out.println(client.getName() + " Client does not exist.");
                     System.out.println("Deleting non-existent Client Folder...");
                     FileUtils.deleteDirectory(new File(System.getProperty("user.home") + "\\Desktop\\Gruntworx\\" + client.getName()));
