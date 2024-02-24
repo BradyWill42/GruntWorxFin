@@ -43,6 +43,8 @@ public class Main{
 			System.out.println("Please choose a valid input.");
 			user = input.nextInt();
 		}
+
+
 		input.close();
 
 		if(user == 2){
@@ -50,6 +52,8 @@ public class Main{
 		} else {
 			email = "jjoconnor@greenoakfinancial.com";
 		}
+
+		System.out.println(email);
 
 
 		if(choice == 1){
