@@ -1,0 +1,8 @@
+Log created on 02.24.2024_10.12.00
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+Snow, Collin & Maryann
+Riley, Ceridwen
+
+Broken Client List: 

@@ -36,7 +36,7 @@ public class Main{
 		}
 
 		String email;
-		System.out.println("Please choose User to use: \n 1 - JJ O'Connor \n 2 - Jenna");
+		System.out.println("Please choose User to use: \n 1 - JJ O'Connor \n 2 - India");
 		Integer user = input.nextInt();
 
 		while(user != 1 && user != 2){
@@ -46,9 +46,9 @@ public class Main{
 		input.close();
 
 		if(user == 2){
-			email = "email2";
+			email = "palashagrawal@greenoakfinancial.com";
 		} else {
-			email = "jjoconnor@gmail.com";
+			email = "jjoconnor@greenoakfinancial.com";
 		}
 
 

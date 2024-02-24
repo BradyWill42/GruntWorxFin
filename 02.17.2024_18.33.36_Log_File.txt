@@ -1,0 +1,7 @@
+Log created on 02.17.2024_18.33.36
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+OConnor, Deirdre
+
+Broken Client List: 

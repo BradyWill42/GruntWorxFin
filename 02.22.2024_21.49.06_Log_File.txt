@@ -1,0 +1,7 @@
+Log created on 02.22.2024_21.49.06
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+Ablett, Jonathan & Walsh, Ann
+
+Broken Client List: 

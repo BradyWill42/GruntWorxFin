@@ -1,0 +1,10 @@
+Log created on 02.19.2024_18.40.12
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+Lecker, Rachel
+Parker, Hayley
+Simes, William & Mary
+Post-Quinn, Alasdair & Marcus, Amanda
+
+Broken Client List: 
