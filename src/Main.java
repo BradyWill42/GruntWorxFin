@@ -29,19 +29,23 @@ public class Main{
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please choose Locate Type to use: \n 1 - Verito isRunning() Find Method \n 2 - Alt Tab method");
 		Integer choice = input.nextInt();
+		input.nextLine();
 
 		while(choice != 1 && choice != 2){
 			System.out.println("Please choose a valid input.");
 			choice = input.nextInt();
+			input.nextLine();
 		}
 
 		String email;
 		System.out.println("Please choose User to use: \n 1 - JJ O'Connor \n 2 - Jenna");
 		Integer user = input.nextInt();
+		input.nextLine();
 
 		while(user != 1 && user != 2){
 			System.out.println("Please choose a valid input.");
 			user = input.nextInt();
+			input.nextLine();
 		}
 		input.close();
 
