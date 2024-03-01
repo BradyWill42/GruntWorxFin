@@ -1,0 +1,7 @@
+Log created on 02.28.2024_12.12.07
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+Shanks, Kimberly & Hollister, Robert
+
+Broken Client List: 

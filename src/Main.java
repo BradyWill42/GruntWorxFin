@@ -74,6 +74,7 @@ public class Main{
 		
 			vm.keyPress(KeyEvent.VK_ALT);
 			vm.keyPress(KeyEvent.VK_TAB);
+			
 			vm.keyRelease(KeyEvent.VK_TAB);
 			vm.keyRelease(KeyEvent.VK_ALT);
 			
