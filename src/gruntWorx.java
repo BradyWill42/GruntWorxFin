@@ -88,14 +88,7 @@ public class gruntWorx {
                     File[] accountDirectoryList = account.listFiles();
                     File[] acctGruntFileDirectoryList = acctGruntFile.listFiles();
 
-                    for (int m = 0; m < accountDirectoryList.length; m++) {
-                        accountDirectoryList[m].setLastModified(0);
-                    }
-
-                    for (int n = 0; n < acctGruntFileDirectoryList.length; n++) {
-                        acctGruntFileDirectoryList[n].setLastModified(0);
-                    }
-                    FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter);
+                    FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter, false);
                     System.out.println(client.getName() + " Directory Successfully Copied.");
                 } catch(IOException e){
                     e.printStackTrace();
