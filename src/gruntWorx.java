@@ -206,7 +206,7 @@ public class gruntWorx {
 
                 //JJ - this is pause that allows files to copy over from local Desktop to Virtual Machine - has to be long because VM is THE WORST!
                 //60000 
-                Thread.sleep(12000);
+                Thread.sleep(120000); //2 minutes
 
                 System.out.println("Files Moved.");
 
@@ -232,7 +232,7 @@ public class gruntWorx {
                 vm.keyPress(KeyEvent.VK_ENTER);
                 vm.keyRelease(KeyEvent.VK_ENTER);
 
-                Thread.sleep(12000);
+                Thread.sleep(12000); //12 seconds
                 
                 System.out.println("Gruntworx Opened.");
 
@@ -518,7 +518,7 @@ public class gruntWorx {
 
                 //JJ - Waiting for Gruntworx to load file selected to upload to its system - HAS TO BE LONG - THIS IS A LONG TIME!
                 //60000
-                Thread.sleep(120000);
+                Thread.sleep(120000); //2 minutes
 
                 //GruntWorx load cancel
                 vm.keyPress(KeyEvent.VK_ALT);
