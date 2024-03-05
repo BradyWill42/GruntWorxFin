@@ -378,7 +378,7 @@ public class gruntWorx {
                 vm.keyRelease(KeyEvent.VK_A);
                 vm.keyRelease(KeyEvent.VK_ALT);
 
-                Thread.sleep(1000);
+                Thread.sleep(5000);
 
                 //navigates file explorer popup
                 for(int i = 0; i < 3; i++){
@@ -389,7 +389,7 @@ public class gruntWorx {
                     Thread.sleep(75);
                 }
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 //types in "DESKTOP" and selects it
                 String desktop = "DESKTOP";
@@ -400,17 +400,17 @@ public class gruntWorx {
                     Thread.sleep(75);
                 }
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 vm.keyPress(KeyEvent.VK_ENTER);
                 vm.keyRelease(KeyEvent.VK_ENTER);
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
                 
                 vm.keyPress(KeyEvent.VK_TAB);
                 vm.keyRelease(KeyEvent.VK_TAB);
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 //types in "GruntWorx" and selects it
                 String grunt = "GRUNTWORX";
@@ -421,7 +421,7 @@ public class gruntWorx {
                     Thread.sleep(75);
                 }
       
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 vm.keyPress(KeyEvent.VK_ENTER);
                 vm.keyRelease(KeyEvent.VK_ENTER);
@@ -441,7 +441,7 @@ public class gruntWorx {
                 // vm.keyPress(KeyEvent.VK_ENTER);
                 // vm.keyRelease(KeyEvent.VK_ENTER);
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 //types in current year, and selects it
                 char[] year = (workingYear.toString()).toCharArray();
@@ -456,7 +456,7 @@ public class gruntWorx {
                 vm.keyPress(KeyEvent.VK_ENTER);
                 vm.keyRelease(KeyEvent.VK_ENTER);
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 //selects all available files in folder
                 vm.keyPress(KeyEvent.VK_CONTROL);
@@ -465,7 +465,7 @@ public class gruntWorx {
                 vm.keyRelease(KeyEvent.VK_A);
                 vm.keyRelease(KeyEvent.VK_CONTROL);
 
-                Thread.sleep(1000);
+                Thread.sleep(3000);
 
                 //adds the selected files
                 vm.keyPress(KeyEvent.VK_ENTER);
