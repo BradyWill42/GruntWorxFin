@@ -84,6 +84,17 @@ public class gruntWorx {
                     IOFileFilter txtFiles = FileFilterUtils.andFileFilter(FileFileFilter.FILE, txtSuffixFilter);
                     // Create a filter for either directories or ".pdf" files
                     FileFilter filter = FileFilterUtils.orFileFilter(DirectoryFileFilter.DIRECTORY, txtFiles);
+
+                    File[] accountDirectoryList = account.listFiles();
+                    File[] acctGruntFileDirectoryList = acctGruntFile.listFiles();
+
+                    for (int m = 0; m < accountDirectoryList.length; m++) {
+                        accountDirectoryList[m].setLastModified(0);
+                    }
+
+                    for (int n = 0; n < acctGruntFileDirectoryList.length; n++) {
+                        acctGruntFileDirectoryList[n].setLastModified(0);
+                    }
                     FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter);
                     System.out.println(client.getName() + " Directory Successfully Copied.");
                 } catch(IOException e){
