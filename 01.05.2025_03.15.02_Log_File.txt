@@ -1,0 +1,7 @@
+Log created on 01.05.2025_03.15.02
+Using InputGrunt.txt as input file.
+
+Successful Client Uploads to GruntWorx: 
+Single, Dummy
+
+Broken Client List: 
