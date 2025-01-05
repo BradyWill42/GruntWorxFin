@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 
 public class gruntWorx {
     public Integer workingYear;
+    public Integer yearShort;
 
     /**    
      * Prompts user to input working year as an int.
@@ -31,6 +32,8 @@ public class gruntWorx {
         Scanner input = new Scanner(System.in);
         System.out.println("Please click after the colon, type the usable year, and press enter:");
         workingYear = input.nextInt();
+        yearShort = workingYear % 100;
+        System.out.println(yearShort);
     }
 
     /**    
@@ -218,7 +221,7 @@ public class gruntWorx {
 
                 //copies string to be pasted into cmd which opens gruntworx
                 //str = new StringSelection("start D:\\DRAKE23\\DDM\\GRUNTWORX");
-                str = new StringSelection("start D:\\DRAKE24\\DDM\\GRUNTWORX");
+                str = new StringSelection("start D:\\DRAKE" + yearShort + "\\DDM\\GRUNTWORX");
                 clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 clipboard.setContents(str, null);
 
