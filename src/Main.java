@@ -48,7 +48,7 @@ public class Main{
 		input.close();
 
 		if(user == 2){
-			email = "palashagrawal@greenoakfinancial.com";
+			email = "kritibhagwat@greenoakfinancial.com";
 		} else {
 			email = "jjoconnor@greenoakfinancial.com";
 		}
