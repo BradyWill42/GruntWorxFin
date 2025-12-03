@@ -1,7 +1,0 @@
-Log created on 02.21.2024_10.46.16
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Sobel, Elizabeth & Nellis, Paul
-
-Broken Client List: 

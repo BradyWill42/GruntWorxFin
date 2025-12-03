@@ -1,8 +1,0 @@
-Log created on 02.18.2024_09.36.56
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Tang, Kerwin
-Bambrick, Sofia & Scott
-
-Broken Client List: 

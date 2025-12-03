@@ -1,7 +1,0 @@
-Log created on 02.19.2024_18.50.01
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Lesher, Christian & Sara
-
-Broken Client List: 

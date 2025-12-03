@@ -1,7 +1,0 @@
-Log created on 02.24.2024_11.04.18
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Bonanno, Jasmine
-
-Broken Client List: 

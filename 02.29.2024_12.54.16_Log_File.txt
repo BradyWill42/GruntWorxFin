@@ -1,7 +1,0 @@
-Log created on 02.29.2024_12.54.16
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Pursell, Natalie
-
-Broken Client List: 

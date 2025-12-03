@@ -1,7 +1,0 @@
-Log created on 02.27.2024_19.56.17
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Oldham, Robyn
-
-Broken Client List: 

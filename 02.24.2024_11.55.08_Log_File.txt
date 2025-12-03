@@ -1,8 +1,0 @@
-Log created on 02.24.2024_11.55.08
-Using InputGrunt.txt as input file.
-
-Successful Client Uploads to GruntWorx: 
-Bradley, Evan & Walton, Susan
-Jones, Douglas & Keefe, Lauren
-
-Broken Client List: 
