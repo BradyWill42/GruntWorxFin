@@ -247,9 +247,7 @@ public class gruntWorx {
                 //FINISHED OPENING GRUNTWORK
 
                 //navigate to the name input box in gruntworx
-
-                Thread.sleep(4000);
-                for(int i = 0; i < 7; i++){
+                for(int i = 0; i < 6; i++){
                     vm.keyPress(KeyEvent.VK_TAB);
                     vm.keyRelease(KeyEvent.VK_TAB);    
                     Thread.sleep(150);
@@ -289,7 +287,7 @@ public class gruntWorx {
                 Thread.sleep(1000);
 
                 //highlight populate in validated box
-                for(int i = 0; i < 7; i++){
+                for(int i = 0; i < 6; i++){
                     vm.keyPress(KeyEvent.VK_SHIFT);
                     vm.keyPress(KeyEvent.VK_TAB);
                     vm.keyRelease(KeyEvent.VK_TAB);  
@@ -312,12 +310,12 @@ public class gruntWorx {
                 Thread.sleep(1000);
 
                 //highlight the expedite button
-                for(int i = 0; i < 2; i++){
-                            vm.keyPress(KeyEvent.VK_SHIFT);
-                            vm.keyPress(KeyEvent.VK_TAB);
-                            vm.keyRelease(KeyEvent.VK_TAB);
-                            vm.keyRelease(KeyEvent.VK_SHIFT);
-                            Thread.sleep(75);
+                for(int i = 0; i < 4; i++){
+                    vm.keyPress(KeyEvent.VK_SHIFT);
+                    vm.keyPress(KeyEvent.VK_TAB);
+                    vm.keyRelease(KeyEvent.VK_TAB);
+                    vm.keyRelease(KeyEvent.VK_SHIFT);
+                    Thread.sleep(75);
                 }
 
 
