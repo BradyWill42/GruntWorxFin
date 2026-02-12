@@ -344,6 +344,12 @@ public class gruntWorx {
                         Thread.sleep(75);
                     }
 
+                    for(int i = 0; i < 2; i++){
+                        vm.keyPress(KeyEvent.VK_DOWN);
+                        vm.keyRelease(KeyEvent.VK_DOWN);
+                        Thread.sleep(75);
+                    }   
+
                     //if client code is addon trades
                     if(client.getTradeType().equals("a")){
                         //select add-on trades option
