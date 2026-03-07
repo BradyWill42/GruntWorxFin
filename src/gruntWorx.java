@@ -217,6 +217,29 @@ public class gruntWorx {
 
                 System.out.println("Files Moved.");
 
+                System.out.println("Killing any existing Gruntworx processes...");
+
+                str = new StringSelection("taskkill /IM gruntworx.exe /F");
+                clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(str, null);
+
+                Thread.sleep(1000);
+
+                vm.keyPress(KeyEvent.VK_CONTROL);
+                Thread.sleep(1000);
+                vm.keyPress(KeyEvent.VK_V);
+                vm.keyRelease(KeyEvent.VK_V);
+                vm.keyRelease(KeyEvent.VK_CONTROL);
+
+                Thread.sleep(1000);
+
+                //opens gruntworx
+                vm.keyPress(KeyEvent.VK_ENTER);
+                vm.keyRelease(KeyEvent.VK_ENTER);
+
+                Thread.sleep(1000);
+
+
                 System.out.println("Starting Gruntworx...");
 
                 //copies string to be pasted into cmd which opens gruntworx
