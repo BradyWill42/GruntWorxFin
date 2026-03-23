@@ -1,14 +1,16 @@
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -18,6 +20,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;    
+import javax.swing.JOptionPane;
 
 
 public class gruntWorx {
@@ -40,7 +43,7 @@ public class gruntWorx {
      * Moves files from Z: drive to new Gruntworx folder on main machine desktop.
      * @return void
      */
-    public void moveGruntFiles(){
+    public boolean moveGruntFiles(){
         //creates gruntworx file on main machine desktop if it does not already exist
         System.out.println("Checking for Gruntworx directory on C: Drive and creating it if it does not exist...");
         if(new File(System.getProperty("user.home") + "\\Desktop\\Gruntworx").exists()){
@@ -83,16 +86,15 @@ public class gruntWorx {
                 try{
 
                     // Create a filter for ".pdf" files
-                    IOFileFilter txtSuffixFilter = FileFilterUtils.suffixFileFilter(".pdf");
-                    IOFileFilter txtFiles = FileFilterUtils.andFileFilter(FileFileFilter.FILE, txtSuffixFilter);
-                    // Create a filter for either directories or ".pdf" files
-                    FileFilter filter = FileFilterUtils.orFileFilter(DirectoryFileFilter.DIRECTORY, txtFiles);
-
-                    File[] accountDirectoryList = account.listFiles();
-                    File[] acctGruntFileDirectoryList = acctGruntFile.listFiles();
-
+                    IOFileFilter txtSuffixFilter = FileFilterUtils.suffixFileFilter(".pdf", IOCase.INSENSITIVE);
                     FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter, false);
+                    ensureNoLockedPdfs(acctGruntFile, client);
                     System.out.println(client.getName() + " Directory Successfully Copied.");
+                } catch(LockedPdfException e){
+                    System.out.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "LOCKED PDF DETECTED", 0);
+                    cleanupLocalGruntworxDirectory();
+                    return false;
                 } catch(IOException e){
                     e.printStackTrace();
                     System.out.println(client.getName() + " Client does not exist.");
@@ -105,8 +107,123 @@ public class gruntWorx {
         } 
         catch(IOException e){  
             e.printStackTrace();  
+            return false;
         }
 
+        return true;
+    }
+
+    private void ensureNoLockedPdfs(File clientYearDir, Client client) throws LockedPdfException{
+        if(clientYearDir == null || client == null || !clientYearDir.exists() || !clientYearDir.isDirectory()){
+            return;
+        }
+
+        Collection<File> pdfFiles = FileUtils.listFiles(clientYearDir, new String[] {"pdf", "PDF"}, true);
+        if(pdfFiles.isEmpty()){
+            return;
+        }
+
+        File lockedDir = new File(clientYearDir, "_LOCKED_PDFS");
+        int lockedCount = 0;
+
+        for(File pdf : pdfFiles){
+            boolean isLocked = hasEncryptMetadata(pdf);
+
+            if(isLocked){
+                try{
+                    lockedDir.mkdirs();
+                    Path relative = clientYearDir.toPath().relativize(pdf.toPath());
+                    Path destination = lockedDir.toPath().resolve(relative);
+                    if(destination.getParent() != null){
+                        Files.createDirectories(destination.getParent());
+                    }
+                    Files.move(pdf.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+                    lockedCount++;
+                } catch(IOException ex){
+                    System.out.println("WARNING: Unable to move locked PDF: " + pdf.getAbsolutePath());
+                }
+            }
+        }
+
+        if(lockedCount > 0){
+            client.setBroken(true);
+            String message = "Check Z drive for files. One or more PDFs are locked for client " + client.getName() + "." +
+                             "\nLocked PDFs moved to: " + lockedDir.getAbsolutePath() +
+                             "\nAutomation will stop and clean up.";
+            throw new LockedPdfException(message);
+        }
+    }
+
+    private boolean hasEncryptMetadata(File pdf){
+        if(pdf == null || !pdf.isFile()){
+            return false;
+        }
+
+        final byte[] marker = "/Encrypt".getBytes(StandardCharsets.ISO_8859_1);
+        byte[] overlap = new byte[marker.length - 1];
+        int overlapLength = 0;
+
+        try(InputStream in = new BufferedInputStream(new FileInputStream(pdf))){
+            byte[] buffer = new byte[8192];
+            int read;
+
+            while((read = in.read(buffer)) != -1){
+                byte[] window = new byte[overlapLength + read];
+                System.arraycopy(overlap, 0, window, 0, overlapLength);
+                System.arraycopy(buffer, 0, window, overlapLength, read);
+
+                if(indexOf(window, marker) >= 0){
+                    return true;
+                }
+
+                overlapLength = Math.min(marker.length - 1, window.length);
+                if(overlapLength > 0){
+                    System.arraycopy(window, window.length - overlapLength, overlap, 0, overlapLength);
+                }
+            }
+        } catch(IOException ex){
+            // If file can't be read, treat it as blocked.
+            return true;
+        }
+
+        return false;
+    }
+
+    private int indexOf(byte[] source, byte[] target){
+        if(source == null || target == null || target.length == 0 || source.length < target.length){
+            return -1;
+        }
+        for(int i = 0; i <= source.length - target.length; i++){
+            int j = 0;
+            while(j < target.length && source[i + j] == target[j]){
+                j++;
+            }
+            if(j == target.length){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void cleanupLocalGruntworxDirectory(){
+        try{
+            File gruntDir = new File(System.getProperty("user.home") + "\\Desktop\\Gruntworx");
+            if(gruntDir.exists()){
+                ClearDir clear = new ClearDir();
+                clear.deleteDirectoryRecursion(gruntDir.toPath());
+                System.out.println("Cleaned up local Gruntworx directory.");
+            }
+        } catch(IOException cleanupEx){
+            System.out.println("WARNING: Failed to clean local Gruntworx directory.");
+            cleanupEx.printStackTrace();
+        }
+    }
+
+    private static class LockedPdfException extends Exception{
+        private static final long serialVersionUID = 1L;
+        public LockedPdfException(String message){
+            super(message);
+        }
     }
 
    

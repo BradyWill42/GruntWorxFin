@@ -24,7 +24,10 @@ public class Main{
 		//creates gruntworx object
 		gruntWorx grunt = new gruntWorx();
 		grunt.yearPrompt();
-		grunt.moveGruntFiles();
+		boolean canContinue = grunt.moveGruntFiles();
+		if(!canContinue){
+			return;
+		}
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please choose Locate Type to use: \n 1 - Verito isRunning() Find Method \n 2 - Alt Tab method");
