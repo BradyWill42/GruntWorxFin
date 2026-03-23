@@ -9,8 +9,6 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -20,7 +18,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;    
-import javax.swing.JOptionPane;
 
 
 public class gruntWorx {
@@ -90,17 +87,13 @@ public class gruntWorx {
                     FileUtils.copyDirectory(account, acctGruntFile, txtSuffixFilter, false);
                     ensureNoLockedPdfs(acctGruntFile, client);
                     System.out.println(client.getName() + " Directory Successfully Copied.");
-                } catch(LockedPdfException e){
-                    System.out.println(e.getMessage());
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "LOCKED PDF DETECTED", 0);
-                    cleanupLocalGruntworxDirectory();
-                    return false;
                 } catch(IOException e){
                     e.printStackTrace();
                     System.out.println(client.getName() + " Client does not exist.");
                     System.out.println("Deleting non-existent Client Folder...");
                     FileUtils.deleteDirectory(new File(System.getProperty("user.home") + "\\Desktop\\Gruntworx\\" + client.getName()));
                     client.setBroken(true);
+                    client.setBrokenReason("Client directory missing on Z drive");
                     System.out.println("Folder Deleted.");
                 }
             }
@@ -113,7 +106,7 @@ public class gruntWorx {
         return true;
     }
 
-    private void ensureNoLockedPdfs(File clientYearDir, Client client) throws LockedPdfException{
+    private void ensureNoLockedPdfs(File clientYearDir, Client client){
         if(clientYearDir == null || client == null || !clientYearDir.exists() || !clientYearDir.isDirectory()){
             return;
         }
@@ -123,34 +116,20 @@ public class gruntWorx {
             return;
         }
 
-        File lockedDir = new File(clientYearDir, "_LOCKED_PDFS");
         int lockedCount = 0;
 
         for(File pdf : pdfFiles){
             boolean isLocked = hasEncryptMetadata(pdf);
 
             if(isLocked){
-                try{
-                    lockedDir.mkdirs();
-                    Path relative = clientYearDir.toPath().relativize(pdf.toPath());
-                    Path destination = lockedDir.toPath().resolve(relative);
-                    if(destination.getParent() != null){
-                        Files.createDirectories(destination.getParent());
-                    }
-                    Files.move(pdf.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-                    lockedCount++;
-                } catch(IOException ex){
-                    System.out.println("WARNING: Unable to move locked PDF: " + pdf.getAbsolutePath());
-                }
+                lockedCount++;
             }
         }
 
         if(lockedCount > 0){
             client.setBroken(true);
-            String message = "Check Z drive for files. One or more PDFs are locked for client " + client.getName() + "." +
-                             "\nLocked PDFs moved to: " + lockedDir.getAbsolutePath() +
-                             "\nAutomation will stop and clean up.";
-            throw new LockedPdfException(message);
+            client.setBrokenReason("Locked PDF file(s) detected");
+            System.out.println("WARNING: " + client.getName() + " skipped because " + lockedCount + " locked PDF file(s) were detected.");
         }
     }
 
@@ -203,27 +182,6 @@ public class gruntWorx {
             }
         }
         return -1;
-    }
-
-    private void cleanupLocalGruntworxDirectory(){
-        try{
-            File gruntDir = new File(System.getProperty("user.home") + "\\Desktop\\Gruntworx");
-            if(gruntDir.exists()){
-                ClearDir clear = new ClearDir();
-                clear.deleteDirectoryRecursion(gruntDir.toPath());
-                System.out.println("Cleaned up local Gruntworx directory.");
-            }
-        } catch(IOException cleanupEx){
-            System.out.println("WARNING: Failed to clean local Gruntworx directory.");
-            cleanupEx.printStackTrace();
-        }
-    }
-
-    private static class LockedPdfException extends Exception{
-        private static final long serialVersionUID = 1L;
-        public LockedPdfException(String message){
-            super(message);
-        }
     }
 
    
@@ -829,7 +787,13 @@ public class gruntWorx {
             
             //writes the broken clients that did not upload to gruntworx
             for(int i = 0; i < ClientList.getBrokenClients().size(); i++){
-                printLine.printf("%s" + "%n", ClientList.getBrokenClients().get(i));
+                Client brokenClient = ClientList.getBrokenClients().get(i);
+                String reason = brokenClient.getBrokenReason();
+                if(reason != null && !reason.isEmpty()){
+                    printLine.printf("%s" + "%n", brokenClient + " - " + reason);
+                } else {
+                    printLine.printf("%s" + "%n", brokenClient);
+                }
             }
 
             printLine.close();

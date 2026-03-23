@@ -4,6 +4,7 @@ public class Client {
     private boolean expedite;
     private String tradeType;
     private boolean broken = false;
+    private String brokenReason = "";
     private boolean equals;
     
     public Client(String fullInput){
@@ -54,6 +55,14 @@ public class Client {
         return broken;
     }
 
+    /**
+     * Returns the reason this client is broken.
+     * @return String reason for broken status
+     */
+    public String getBrokenReason(){
+        return brokenReason;
+    }
+
     /**    
      * Gets whether the imput for the client has an equals sign.
      * @return boolean of whether "=" sign exists in clients full input
@@ -94,6 +103,14 @@ public class Client {
         this.broken = broken;
     }
 
+    /**
+     * Sets reason for broken status.
+     * @return void
+     */
+    public void setBrokenReason(String brokenReason){
+        this.brokenReason = brokenReason;
+    }
+
     
     /**
      * Using input from InputGrunt.txt file, assigns codes to each client in the input file.     
@@ -126,6 +143,7 @@ public class Client {
 
                 } else {
                     broken = true;
+                    brokenReason = "Invalid pdf format";
                 }
                 break;
             }
