@@ -143,7 +143,7 @@ public class Client {
 
                 } else {
                     broken = true;
-                    brokenReason = "Invalid pdf format";
+                    brokenReason = "Invalid input code format";
                 }
                 break;
             }
